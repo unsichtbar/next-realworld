@@ -2,6 +2,7 @@ import React from "react";
 
 import { useQuery, useMutation, queryCache } from "react-query";
 
+
 import { postRegister } from "../../../api/register-api";
 import { UserModel } from "../../../models/UserModel";
 import { useUser } from "../../../lib/auth/Authentication";
@@ -33,7 +34,7 @@ function newFormValue(value: string) {
   };
 }
 
-export const Register: React.FC<{}> = (props) => {
+export const Register = () => {
   const { user, setUser } = useUser();
   const [username, setUsername] = React.useState<FormValue>(createFormValue());
   const [email, setEmail] = React.useState<FormValue>(createFormValue());
@@ -41,7 +42,7 @@ export const Register: React.FC<{}> = (props) => {
   const [password, setPassword] = React.useState<FormValue>(createFormValue);
   const [submitted, setSubmitted] = React.useState<boolean>(false);
 
- // const router = useRouter();
+  const router = useRouter();
 
   const [register] = useMutation(postRegister, {
     onSuccess: (user: UserModel) => {
@@ -91,10 +92,13 @@ export const Register: React.FC<{}> = (props) => {
       });
     }
   }
-  // if (user) {
-  // //  router.push("/")
-  //   return null;
-  // }
+  if (user) {
+    if (typeof window !== 'undefined') {
+      router.push('/realworld')
+      return null;
+    }
+
+  }
   return (
     <div>
       <form>
@@ -137,5 +141,12 @@ export const Register: React.FC<{}> = (props) => {
   );
 };
 
+export const getInitialProps = ctx => {
+  if (ctx.res) {
+    ctx.res.writeHead(302, { Location: '/realworld' });
+    ctx.res.end();
+  }
+  return { };
 
+}
 export default Register;

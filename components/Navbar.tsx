@@ -1,7 +1,7 @@
 import React from "react";
 import Link from 'next/link'
 import styled from "styled-components";
-import { useUser } from "../../../../lib/auth/Authentication";
+import { useUser } from "../lib/auth/Authentication";
 
 export const Navbar: React.FC<{}> = (props) => {
   const { user } = useUser();

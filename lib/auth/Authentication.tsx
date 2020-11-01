@@ -2,7 +2,7 @@ import React from "react";
 import { UserModel } from "../../models/UserModel";
 
 function initialUser(): UserModel | null {
-  const stored = "{}";//localStorage.getItem("user");
+  const stored = "";//localStorage.getItem("user");
   if (!stored) {
     return null;
   }
